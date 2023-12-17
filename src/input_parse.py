@@ -1,5 +1,5 @@
 import argparse
-from moviepy_editor import get_clip_duration
+from ffmpeg_editor import get_clip_duration
 
 
 def extract_time(time_array):
@@ -9,7 +9,7 @@ def extract_time(time_array):
         return float(time_array[2]) * 3600 + float(time_array[1]) * 60 + float(time_array[2])
 
 
-def get_parsed_inputs(args):
+def get_parsed_inputs():
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("input")
     arg_parser.add_argument("output")
@@ -18,7 +18,7 @@ def get_parsed_inputs(args):
     arg_parser.add_argument("--speed", required=False, type=float)
     arg_parser.add_argument("--resize", required=False, type=float)
     return _parse_inputs(
-        arg_parser.parse_args(args)
+        arg_parser.parse_args()
     )
 
 
@@ -56,7 +56,7 @@ def _parse_inputs(input_args):
     print("\n" +
           f"From time: {clip_from_time if clip_from_time is not None else 'From the start'}, "
           f"to time: {clip_to_time if clip_to_time is not None else 'To the end'}. "
-          f"To speed: {speed if speed is not None else 'None'} "
-          f"Resize: {resize if resize is not None else 'default size'} "
-          )
+          f"To speed: {speed if speed is not None else 'Same speed'} "
+          f"Resize: {resize if resize is not None else 'Same size'} "
+    )
     return input_file_cmd, output_file_cmd, clip_from_time, clip_to_time, speed, resize
