@@ -3,6 +3,11 @@ from ffmpeg_editor import get_clip_duration
 
 
 def extract_time(time_array):
+    """
+    Converts hh:mm:ss timestamps to just seconds
+    :param time_array: The timestamp split into a list [hh, mm, ss]
+    :return: A sum of the time in seconds
+    """
     if len(time_array) == 2:
         return float(time_array[0]) * 60 + float(time_array[1])
     elif len(time_array) == 3:
@@ -10,6 +15,10 @@ def extract_time(time_array):
 
 
 def get_parsed_inputs():
+    """
+    Captures the arguments to be parsed
+    :return: A Python object with the arguments as properties
+    """
     arg_parser = argparse.ArgumentParser()
     arg_parser.add_argument("input")
     arg_parser.add_argument("output")
@@ -23,6 +32,12 @@ def get_parsed_inputs():
 
 
 def _parse_inputs(input_args):
+    """
+    Sanitizes and parses all inputs
+    :param input_args: Args parsed by get_parsed_inputs
+    :return: Values in order: the input file name, the output file name, starting time we wish to clip, final time we wish to clip to, speed, and resize factor.
+    Time can be specified as just seconds, float seconds, or hh:mm:ss timestamps.
+    """
     input_file_cmd = input_args.input
     output_file_cmd = input_args.output
     from_time_cmd = input_args.fromTime
